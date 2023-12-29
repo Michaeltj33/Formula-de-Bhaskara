@@ -7,12 +7,23 @@ using UnityEngine.UI;
 public class Bhaskara : MonoBehaviour
 {
     public FundoPanel fundoPanel;
-    public Formula f2;
-    public Formula f3;
-    public Formula f4;
-    public Formula f5;
-    public Formula f6;
-    public Formula f7;
+
+    public GameObject[] gameObjectTotal;
+    /* 
+        public GameObject gameObjectF1;
+        public GameObject gameObjectF2;
+        public GameObject gameObjectF3;
+        public GameObject gameObjectF4;
+        public GameObject gameObjectF5;
+        public GameObject gameObjectF6;
+        public GameObject gameObjectF7; */
+
+    private Formula f2;
+    private Formula f3;
+    private Formula f4;
+    private Formula f5;
+    private Formula f6;
+    private Formula f7;
 
     public GameObject NotDivisionZero;
     public GameObject negativeSolution;
@@ -26,6 +37,7 @@ public class Bhaskara : MonoBehaviour
     private Text getLetterB;
     private Text getLetterC;
 
+    private SetAlpha setAlpha;
 
     public TextMeshProUGUI bhaskaraTextMeshProUGUI;
 
@@ -37,11 +49,31 @@ public class Bhaskara : MonoBehaviour
     private string resMais;
     private string resMenos;
     private string solucao;
+    public GameObject VFX;
+
+    private Transform VFXTrasnform;
     public GameController gameController;
 
+    void Awake()
+    {
+        f2 = gameObjectTotal[1].GetComponent<Formula>();
+        f3 = gameObjectTotal[2].GetComponent<Formula>();
+        f4 = gameObjectTotal[3].GetComponent<Formula>();
+        f5 = gameObjectTotal[4].GetComponent<Formula>();
+        f6 = gameObjectTotal[5].GetComponent<Formula>();
+        f7 = gameObjectTotal[6].GetComponent<Formula>();
+
+        VFXTrasnform = GetComponent<Transform>();
+        setAlpha = VFX.GetComponent<SetAlpha>();
+
+        ResetFomulasSetActive();
+
+       
+
+    }
 
     public void CalcularBhaskara()
-    {
+    {       
 
         negativeSolution.SetActive(false);
         getLetterA = fundoPanel.Getletra(0);
@@ -70,6 +102,17 @@ public class Bhaskara : MonoBehaviour
         CalcF6();
 
         CalcF7();
+    }
+
+    public void ResetFomulasSetActive()
+    {
+        SetActiveFormula(0, false);
+        SetActiveFormula(1, false);
+        SetActiveFormula(2, false);
+        SetActiveFormula(3, false);
+        SetActiveFormula(4, false);
+        SetActiveFormula(5, false);
+        SetActiveFormula(6, false);
     }
 
     private void GetTextTitulo(string texto, ref string textLetter)
@@ -126,7 +169,7 @@ public class Bhaskara : MonoBehaviour
         if (int.Parse(text4ac) < 0)
         {
             NotDivisionZero.SetActive(false);
-            negativeSolution.SetActive(true);
+            //negativeSolution.SetActive(true);
         }
         else
         {
@@ -174,6 +217,22 @@ public class Bhaskara : MonoBehaviour
 
         solucao = OrdemCrescente(resMais, resMenos);
         f7.SetText(7, solucao);
+
+        setAlpha.SetFormulasTotal();
+    }
+
+
+
+    public string GetRaizQuadrada4ac(){
+         if (int.Parse(text4ac) < 0){
+            return "erroRaiz";
+         }
+        return text4acRaizQuadrada;
+    }
+
+    public void SetActiveFormula(int value, bool active)
+    {
+        gameObjectTotal[value].SetActive(active);
     }
 
     private string OrdemCrescente(string text1, string text2)

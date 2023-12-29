@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     public GameObject textBhaskara;
     public GameObject painelBhaskara;
 
+    public Bhaskara bhaskara;
+
     void Awake()
     {
         ActiveText(true);
@@ -16,26 +18,27 @@ public class GameController : MonoBehaviour
     public void ActiveforInput()
     {
         ActiveText(true);
-        ActivePanel(false);
+        //ActivePanel(false);
+        bhaskara.ResetFomulasSetActive();
     }
 
     public void ActiveforButton()
     {
         ActiveText(false);
-        ActivePanel(true);
+        //ActivePanel(true);
     }
 
 
 
     public void ActiveText(bool active)
     {
-        SetActive(ref textBhaskara, active);
+       SetActive(ref textBhaskara, active);
 
     }
 
     public void ActivePanel(bool active)
     {
-        SetActive(ref painelBhaskara, active);
+        //SetActive(ref painelBhaskara, active);
 
     }
 
